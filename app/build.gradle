@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion compileAndTargetSdk
+	buildToolsVersion '27.0.3'
+
+	defaultConfig {
+		applicationId "com.dhimant.jobdispatcher"
+		minSdkVersion compileAndTargetSdk
+		targetSdkVersion compileAndTargetSdk
+		versionCode 1
+		versionName "1.0"
+		resConfigs("en", "xxxhdpi")
+		ndk {
+			abiFilters "x86", "x86_64", "arm64-v8a", "armeabi-v7a"
+		}
+	}
+
+	buildTypes {
+		release {
+			minifyEnabled true
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			splits.abi.enable = false
+			splits.density.enable = false
+			aaptOptions.cruncherEnabled = false
+		}
+	}
+
+	dexOptions {
+		preDexLibraries true
+		maxProcessCount 8
+	}
+}
+
+dependencies {
+	implementation ('com.android.support:appcompat-v7:27.0.2') {
+		force = true
+	}
+	implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+}
